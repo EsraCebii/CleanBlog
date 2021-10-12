@@ -30,6 +30,12 @@ app.get('/', async (req, res) => {
     blogs
   });
 });
+app.get('/blogs/:id', async (req, res) => {
+   const blog = await Blog.findById(req.params.id)
+   res.render('blog', {
+     blog
+   })
+});
 app.get('/about', (req, res) => {
   res.render('about');
 });
