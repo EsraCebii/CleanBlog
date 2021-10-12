@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const ejs = require('ejs');
 
-const Blog = require('./models/Blog');
+const Post = require('./models/Post');
 
 const app = express();
 
@@ -25,15 +25,15 @@ app.use(express.json())
 
 //ROUTES
 app.get('/', async (req, res) => {
-  const blogs = await Blog.find({})
+  const posts = await Post.find({})
   res.render('index', {
-    blogs
+    posts
   });
 });
-app.get('/blogs/:id', async (req, res) => {
-   const blog = await Blog.findById(req.params.id)
-   res.render('blog', {
-     blog
+app.get('/posts/:id', async (req, res) => {
+   const post = await Post.findById(req.params.id)
+   res.render('post', {
+     post
    })
 });
 app.get('/about', (req, res) => {
@@ -45,8 +45,8 @@ app.get('/add', (req, res) => {
 app.get('/post', (req, res) => {
   res.render('post');
 });
-app.post('/blogs', async  (req, res) => {
-  await Blog.create(req.body)
+app.post('/posts', async  (req, res) => {
+  await Post.create(req.body)
   res.redirect('/')
 });
 
