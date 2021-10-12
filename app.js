@@ -22,7 +22,9 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({extended:true}))
 app.use(express.json());
-app.use(methodOverride('_method'));
+app.use(methodOverride('_method', {
+  methods: ['POST','GET']
+}));
 
 
 //ROUTES
@@ -64,6 +66,15 @@ app.put('/posts/:id', async (req, res) => {
   post.save()
 
   res.redirect(`/posts/${req.params.id}`)
+});
+app.delete('/posts/:id', async (req, res) => {
+  // const post = await Post.findOne({ _id: req.params.id });
+  // let deletedPost = __dirname + '/public' + photo.image;
+  // fs.unlinkSync(deletedImage);
+  await Post.findByIdAndRemove(req.params.id);
+  
+
+  res.redirect("/")
 });
 
 

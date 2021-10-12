@@ -9,7 +9,7 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
             <h1><%= post.title %></h1>
-            <h2 class="subheading"><%= post.detail %></h2>
+            <h2 class="subheading"><%= post.detail.substring(0, 50) %></h2>
             <span class="meta"> <%= post.dateCreated.toDateString() %></span>
           </div>
         </div>
@@ -26,7 +26,8 @@
           <h2><%= post.title %></h2>
           <p><%= post.detail %></p>
           <a href="/posts/edit/<%= post._id %>" class="btn btn-primary"><span>Update Details</span> </a>
-          <button  class="btn btn-danger" >Delete</button>
+          <a href="/posts/<%= post._id %>?_method=DELETE" class="btn btn-danger"
+            onclick="return confirm('Are you sure?')"><span>Delete</span> </a>
         </div>
       </div>
     </div>
