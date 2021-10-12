@@ -1,9 +1,12 @@
 # CleanBlog 
-
-## libraries and Packages
+You can add, update and delete posts.
+## Libraries and Packages
 + Nodejs
 + Express
 + nodemon
-+ Mongoose CRUD
++ Template Engine
++ Mongo DB
++ Mongoose 
++ CRUD
 + method-override
 + MVC
