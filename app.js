@@ -6,6 +6,8 @@ const path = require('path');
 const ejs = require('ejs');
 
 const Post = require('./models/Post');
+const postController = require('./controllers/postController');
+const pageController = require('./controllers/pageController');
 
 const app = express();
 
@@ -28,54 +30,15 @@ app.use(methodOverride('_method', {
 
 
 //ROUTES
-app.get('/', async (req, res) => {
-  const posts = await Post.find({}).sort('-dateCreated');
-  res.render('index', {
-    posts
-  });
-});
-app.get('/posts/:id', async (req, res) => {
-   const post = await Post.findById(req.params.id)
-   res.render('post', {
-     post
-   })
-});
-app.get('/about', (req, res) => {
-  res.render('about');
-});
-app.get('/add', (req, res) => {
-  res.render('add');
-});
-app.get('/posts/edit/:id', async (req, res) => {
-  const post = await Post.findOne({_id: req.params.id})
-  res.render('edit',{
-    post
-  });
-});
-app.get('/post', (req, res) => {
-  res.render('post');
-});
-app.post('/posts', async  (req, res) => {
-  await Post.create(req.body)
-  res.redirect('/')
-});
-app.put('/posts/:id', async (req, res) => {
-  const post = await Post.findOne({ _id: req.params.id });
-  post.title = req.body.title
-  post.detail = req.body.detail
-  post.save()
+app.get('/', postController.getAllPosts);
+app.get('/posts/:id', postController.getPost);
+app.post('/posts', postController.createPost);
+app.put('/posts/:id', postController.updatePost);
+app.delete('/posts/:id', postController.deletePost);
 
-  res.redirect(`/posts/${req.params.id}`)
-});
-app.delete('/posts/:id', async (req, res) => {
-  // const post = await Post.findOne({ _id: req.params.id });
-  // let deletedPost = __dirname + '/public' + photo.image;
-  // fs.unlinkSync(deletedImage);
-  await Post.findByIdAndRemove(req.params.id);
-  
-
-  res.redirect("/")
-});
+app.get('/about', pageController.getAboutPage);
+app.get('/add', pageController.getAddPage);
+app.get('/posts/edit/:id', pageController.getEditPage);
 
 
 
